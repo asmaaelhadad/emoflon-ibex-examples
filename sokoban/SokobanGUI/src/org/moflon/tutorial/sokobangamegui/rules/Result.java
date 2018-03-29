@@ -2,15 +2,11 @@ package org.moflon.tutorial.sokobangamegui.rules;
 
 public class Result {
 	private boolean success;
-	private String reasonForFailure;
+	private String reason;
 
-	public Result() {
-		success = true;
-	}
-
-	public Result(String reasonForFailure) {
-		success = false;
-		this.reasonForFailure = reasonForFailure;
+	public Result(boolean success, String reason) {
+		this.success = success;
+		this.reason = reason;
 	}
 
 	public boolean isSuccess() {
@@ -18,6 +14,6 @@ public class Result {
 	}
 
 	public String getReason() {
-		return reasonForFailure;
+		return reason;
 	}
 }

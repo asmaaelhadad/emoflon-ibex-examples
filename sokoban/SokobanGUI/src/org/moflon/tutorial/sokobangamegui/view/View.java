@@ -119,6 +119,7 @@ public class View extends JFrame {
 		fileMenu.addSeparator();
 		fileMenu.add(loadItem);
 		fileMenu.add(saveItem);
+		fileMenu.addSeparator();
 		fileMenu.add(playToggle);
 
 		menuBar.add(fileMenu);

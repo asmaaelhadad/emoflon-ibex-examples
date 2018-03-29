@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <psf version="2.0">
 <provider id="org.eclipse.egit.core.GitProvider">
-<project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,master,sokoban/SokobanGUI"/>
-<project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,master,sokoban/SokobanLanguage"/>
+<project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,master-solution-gt,sokoban/SokobanGUI"/>
+<project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,master-solution-gt,sokoban/SokobanLanguage"/>
+<project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,master-solution-gt,sokoban/SokobanRules"/>
 </provider>
 </psf>

@@ -26,10 +26,6 @@ public class Controller {
 	private View view;
 	private Board board;
 	private SokobanRules sokobanRules;
-
-	public Controller() {
-		sokobanRules = new SokobanRules();
-	}
 	
 	/**
 	 * Main function or rather program entry point.
@@ -55,6 +51,8 @@ public class Controller {
 			/* Store reference to the new board and allocate a new view */
 			this.board = board;
 			view = new View(this, board);
+			
+			sokobanRules = new SokobanRules(board);
 		}
 	}
 	
@@ -114,9 +112,9 @@ public class Controller {
 		
 		if(result.isSuccess()) {
 			board.setSelectedFigure(null);
-		} else {
-			view.showMessage(result.getReason());			
 		}
+		
+		view.showMessage(result.getReason());
 	}
 
 	/**
@@ -212,11 +210,7 @@ public class Controller {
 
 	public boolean boardIsValid() {
 		Result result = sokobanRules.validateBoard(board);
-		if(!result.isSuccess()) {
-			view.showMessage(result.getReason());
-			return false;
-		} else {
-			return true;
-		}
+		view.showMessage(result.getReason());
+		return result.isSuccess();
 	}
 }

@@ -5,15 +5,20 @@ import SokobanLanguage.Field;
 import SokobanLanguage.Figure;
 
 public class SokobanRules {
+	private String allsWell = "Everything seems to be ok...";
+
+	public SokobanRules(Board board) {
+
+	}
 
 	public Result move(Figure figure, Field field) {
-		// FIXME:  Check if the move makes sense
+		// FIXME: Only move if it makes sense
 		field.setFigure(figure);
-		return new Result();
+		return new Result(true, allsWell);
 	}
 
 	public Result validateBoard(Board board) {
 		// FIXME: Check if the board is valid
-		return new Result();
+		return new Result(true, allsWell);
 	}
 }
