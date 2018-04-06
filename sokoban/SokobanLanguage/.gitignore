@@ -1,5 +1,0 @@
-/bin
-/target
-/gen/*
-!/**/.keep*
-/model/*.genmodel
