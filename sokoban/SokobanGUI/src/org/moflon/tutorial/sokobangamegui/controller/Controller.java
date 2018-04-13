@@ -109,11 +109,7 @@ public class Controller {
 	private void moveTo(Field field) {
 		Figure figure = board.getSelectedFigure();
 		Result result = sokobanRules.move(figure, field);
-		
-		if(result.isSuccess()) {
-			board.setSelectedFigure(null);
-		}
-		
+		board.setSelectedFigure(null);
 		view.showMessage(result.getReason());
 	}
 
