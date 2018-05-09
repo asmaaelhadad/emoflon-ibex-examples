@@ -5,7 +5,7 @@ abstract rule moveSokoban {
 
 	to: Field
 
-	fig: Sokoban {
+	sok: Sokoban {
 		-- -field -> from
 		++ -field -> to
 	}
@@ -22,12 +22,33 @@ abstract rule pushBlock {
 	}
 }
 
+pattern occupiedField {
+	fig: Figure
+
+	to: Field {
+		-figure -> fig
+	}
+}
+
+condition freeTo = forbid occupiedField
+
 rule moveSokobanUp
 refines moveSokoban {
 	from: Field {
 		-top -> to
 	}
 }
+when freeTo
+
+pattern occupiedNext {
+	fig: Figure
+
+	next: Field {
+		-figure -> fig
+	}
+}
+
+condition freeNext = forbid occupiedNext
 
 rule pushBlockUp
 refines pushBlock, moveSokobanUp {
@@ -35,6 +56,7 @@ refines pushBlock, moveSokobanUp {
 		-top -> next
 	}
 }
+when freeNext
 
 rule moveSokobanDown
 refines moveSokoban {
@@ -42,6 +64,7 @@ refines moveSokoban {
 		-bottom -> to
 	}
 }
+when freeTo
 
 rule pushBlockDown
 refines pushBlock, moveSokobanDown {
@@ -49,6 +72,7 @@ refines pushBlock, moveSokobanDown {
 		-bottom -> next
 	}
 }
+when freeNext
 
 rule moveSokobanLeft
 refines moveSokoban {
@@ -56,6 +80,7 @@ refines moveSokoban {
 		-left -> to
 	}
 }
+when freeTo
 
 rule pushBlockLeft
 refines pushBlock, moveSokobanLeft {
@@ -63,6 +88,7 @@ refines pushBlock, moveSokobanLeft {
 		-left -> next
 	}
 }
+when freeNext
 
 rule moveSokobanRight
 refines moveSokoban {
@@ -70,6 +96,7 @@ refines moveSokoban {
 		-right -> to
 	}
 }
+when freeTo
 
 rule pushBlockRight
 refines pushBlock, moveSokobanRight {
@@ -77,3 +104,4 @@ refines pushBlock, moveSokobanRight {
 		-right -> next
 	}
 }
+when freeNext
