@@ -5,7 +5,6 @@ import java.io.File;
 import org.eclipse.emf.common.util.URI;
 
 import SokobanLanguage.Board;
-import SokobanRules.api.SokobanRulesAPI;
 import SokobanRules.api.SokobanRulesDemoclesApp;
 
 public class SokobanValidator extends SokobanRulesDemoclesApp {
@@ -15,10 +14,5 @@ public class SokobanValidator extends SokobanRulesDemoclesApp {
 
 		createModel(URI.createURI("board.xmi"));
 		resourceSet.getResources().get(0).getContents().add(board);
-	}
-
-	@Override
-	public SokobanRulesAPI initAPI() {
-		return super.initAPI();
 	}
 }
