@@ -98,8 +98,8 @@ public class View extends JFrame {
 
 		JMenuItem newBoardItem = new JMenuItem("New Board...");
 		JMenuItem clearBoardItem = new JMenuItem("Clear Board");
-		JMenuItem loadItem = new JMenuItem("Load Model...");
-		JMenuItem saveItem = new JMenuItem("Save Model...");
+		JMenuItem loadItem = new JMenuItem("Load Board...");
+		JMenuItem saveItem = new JMenuItem("Save Board...");
 
 		JMenuItem playToggle = new JMenuItem();
 

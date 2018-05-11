@@ -43,4 +43,8 @@ public class PlayAction implements ActionListener {
 	public boolean isPlayModus() {
 		return playModus;
 	}
+
+	public void setPlayModus(boolean b) {
+		playModus = b;
+	}
 }

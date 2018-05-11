@@ -12,53 +12,66 @@ import org.moflon.tutorial.sokobangamegui.view.View;
 
 /**
  * Custom action listener for load- and save-action.
+ * 
  * @author Matthias Senker (Comments by Lukas Hermanns)
  */
 public class LoadSaveAction implements ActionListener {
+	private static final String SOK = "sok";
+	private static final String MODELS = "xmi";
+
 	private JFileChooser fileChooser;
 	private View view;
-	
+
 	private JComponent saveSource;
 
 	public LoadSaveAction(View view, JComponent saveSource, JComponent loadSource) {
 		/* Setup internal memory */
 		this.view = view;
 		this.saveSource = saveSource;
-		
+
 		/* Show file selector */
-		fileChooser = new JFileChooser("instances/");
+		fileChooser = new JFileChooser("boards/");
 		fileChooser.setAcceptAllFileFilterUsed(false);
-		FileFilter filter = new FileNameExtensionFilter("models", "xmi");
-		fileChooser.addChoosableFileFilter(filter);
+		FileFilter filterXMI = new FileNameExtensionFilter(MODELS, MODELS);
+		FileFilter filterSOK = new FileNameExtensionFilter(SOK, SOK);
+		fileChooser.addChoosableFileFilter(filterSOK);
+		fileChooser.addChoosableFileFilter(filterXMI);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(saveSource)) {
 			if (fileChooser.showSaveDialog(view) == JFileChooser.APPROVE_OPTION) {
 				/* Get full filename from file-selector */
 				String filePath = fileChooser.getSelectedFile().getPath();
-				
-				/* Adjust filename for XMI file-extension */
-				if (fileChooser.getFileFilter().getDescription().equals("models")
-						&& !filePath.endsWith(".xmi"))
-				{
-					filePath += ".xmi";
+
+				if (fileChooser.getFileFilter().getDescription().contentEquals(SOK)) {
+					filePath = addExtensionIfMissing(filePath, SOK);
+					view.getController().saveSOKFile(filePath);
+				} else {
+					filePath = addExtensionIfMissing(filePath, MODELS);
+					view.getController().saveModel(filePath);
 				}
-				
-				/* Write the model to file */
-				view.getController().saveModel(filePath);
 			}
 		} else {
 			if (fileChooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
 				/* Get full filename from file-selector */
 				String filePath = fileChooser.getSelectedFile().getPath();
-				
+
 				/* Read the model from file */
-				view.getController().loadModel(filePath);
+				if (fileChooser.getFileFilter().getDescription().equals(SOK))
+					view.getController().loadSOKFile(filePath);
+				else
+					view.getController().loadModel(filePath);
 			}
 		}
 	}
-	
-	
+
+	private String addExtensionIfMissing(String filePath, String extension) {
+		if (fileChooser.getFileFilter().getDescription().equals(extension) && !filePath.endsWith("." + extension))
+			return filePath + "." + extension;
+		else
+			return filePath;
+	}
+
 }

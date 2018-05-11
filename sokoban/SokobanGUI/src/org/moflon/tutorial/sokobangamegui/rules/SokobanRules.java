@@ -24,15 +24,21 @@ public class SokobanRules {
 		possibleMoves = new HashMap<>();
 
 		// Subscribe to appearing matches and update possible moves
-		api.moveSokobanDown().subscribeAppearing(m -> register(m.getTo(), () -> api.moveSokobanDown().apply(m)));
-		api.moveSokobanUp().subscribeAppearing(m -> register(m.getTo(), () -> api.moveSokobanUp().apply(m)));
-		api.moveSokobanLeft().subscribeAppearing(m -> register(m.getTo(), () -> api.moveSokobanLeft().apply(m)));
-		api.moveSokobanRight().subscribeAppearing(m -> register(m.getTo(), () -> api.moveSokobanRight().apply(m)));
+		api.moveSokobanDown()
+				.subscribeAppearing(m -> register(m.getTo(), m.getTo(), () -> api.moveSokobanDown().apply()));
+		api.moveSokobanUp().subscribeAppearing(m -> register(m.getTo(), m.getTo(), () -> api.moveSokobanUp().apply()));
+		api.moveSokobanLeft()
+				.subscribeAppearing(m -> register(m.getTo(), m.getTo(), () -> api.moveSokobanLeft().apply()));
+		api.moveSokobanRight()
+				.subscribeAppearing(m -> register(m.getTo(), m.getTo(), () -> api.moveSokobanRight().apply()));
 
-		api.pushBlockUp().subscribeAppearing(m -> register(m.getTo(), () -> api.pushBlockUp().apply(m)));
-		api.pushBlockDown().subscribeAppearing(m -> register(m.getTo(), () -> api.pushBlockDown().apply(m)));
-		api.pushBlockLeft().subscribeAppearing(m -> register(m.getTo(), () -> api.pushBlockLeft().apply(m)));
-		api.pushBlockRight().subscribeAppearing(m -> register(m.getTo(), () -> api.pushBlockRight().apply(m)));
+		api.pushBlockUp().subscribeAppearing(m -> register(m.getTo(), m.getNext(), () -> api.pushBlockUp().apply()));
+		api.pushBlockDown()
+				.subscribeAppearing(m -> register(m.getTo(), m.getNext(), () -> api.pushBlockDown().apply()));
+		api.pushBlockLeft()
+				.subscribeAppearing(m -> register(m.getTo(), m.getNext(), () -> api.pushBlockLeft().apply()));
+		api.pushBlockRight()
+				.subscribeAppearing(m -> register(m.getTo(), m.getNext(), () -> api.pushBlockRight().apply()));
 
 		// Subscribe to disappearing matches and update possible moves
 		api.moveSokobanDown().subscribeDisappearing(m -> possibleMoves.remove(m.getTo()));
@@ -46,12 +52,13 @@ public class SokobanRules {
 		api.pushBlockRight().subscribeDisappearing(m -> possibleMoves.remove(m.getTo()));
 	}
 
-	// Add the potential move to this target field
-	private void register(Field targetField, Runnable applyRule) {
-		possibleMoves.put(targetField, () -> {
-			applyRule.run();
-			return new Result(true, "Go Sokoban!");
-		});
+	// If the required field is indeed empty, add the potential rule application
+	private void register(Field targetField, Field emptyField, Runnable applyRule) {
+		if (!api.anOccupiedField().bindField(emptyField).hasMatches())
+			possibleMoves.put(targetField, () -> {
+				applyRule.run();
+				return new Result(true, "Go Sokoban!");
+			});
 	}
 
 	// If we have a suitable rule application, choose it and apply
