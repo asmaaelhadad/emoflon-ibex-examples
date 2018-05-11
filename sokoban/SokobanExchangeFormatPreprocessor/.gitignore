@@ -1,0 +1,4 @@
+/bin
+/gen
+/model/*.genmodel
+/src-gen/

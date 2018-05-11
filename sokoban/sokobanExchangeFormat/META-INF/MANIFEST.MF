@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: sokobanExchangeFormat; singleton:=true
+Export-Package: org.emoflon.ibex.handbook,
+ org.emoflon.ibex.handbook.api,
+ org.emoflon.ibex.handbook.generator,
+ org.emoflon.ibex.handbook.parser.antlr,
+ org.emoflon.ibex.handbook.parser.antlr.internal,
+ org.emoflon.ibex.handbook.scoping,
+ org.emoflon.ibex.handbook.serializer,
+ org.emoflon.ibex.handbook.services,
+ org.emoflon.ibex.handbook.sokobanExchangeFormat,
+ org.emoflon.ibex.handbook.sokobanExchangeFormat.impl,
+ org.emoflon.ibex.handbook.sokobanExchangeFormat.util,
+ org.emoflon.ibex.handbook.validation
+Bundle-Name: sokobanExchangeFormat
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: eMoflon::IBeX Developers
+Import-Package: org.apache.log4j
+Automatic-Module-Name: sokobanExchangeFormat
