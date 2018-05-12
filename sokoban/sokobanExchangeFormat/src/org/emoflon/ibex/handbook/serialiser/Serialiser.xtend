@@ -4,48 +4,36 @@ import org.emoflon.ibex.handbook.sokobanExchangeFormat.Board
 import org.emoflon.ibex.handbook.sokobanExchangeFormat.Entry
 import org.emoflon.ibex.handbook.sokobanExchangeFormat.End
 import org.emoflon.ibex.handbook.sokobanExchangeFormat.Normal
+import org.emoflon.ibex.handbook.sokobanExchangeFormat.Row
 
 class Serialiser {
 	static def String serialise(Board board) {
-		var rep = ""
-		var r = board.firstRow
-
-		do {
-			var e = r.firstEntry
-			do {
-				rep += serialise(e)
-				e = e.next
-			} while (e !== null)
-			if(r.next !== null)
-				rep += "\n"
-			r = r.next
-		} while (r !== null)
-
 		'''
 		Name::"«board.name»"
 		Author::"«board.author»"
 		
-		«rep»'''
+		«serialise(board.firstRow)»'''
+	}
+
+	static def String serialise(Row r) {
+		'''
+		«serialise(r.firstEntry)»«IF (r.next !== null)»
+		«serialise(r.next)»«ENDIF»'''
 	}
 
 	static def String serialise(Entry e) {
-		switch (e) {
-			case e instanceof End: {
-				val end = e as End
-				if(end.symbol !== null)
-					return end.symbol.value.literal
-				else
-					return "." 
-			}
-			case e instanceof Normal: {
-				val end = e as Normal
-				if(end.symbol !== null)
-					return end.symbol.value.literal
-				else
-					return " " 
-			}
-			default: {
-			}
-		}
+		'''«handleEntry(e)»«IF (e.next !== null)»«serialise(e.next)»«ENDIF»'''
+	}
+	
+	static def String handleEntry(Entry e){
+		'''«IF (e instanceof End)»«serialiseEnd(e)»«ELSEIF (e instanceof Normal)»«serialiseNormal(e)»«ENDIF»'''
+	}
+	
+	static def String serialiseEnd(End e){
+		'''«IF(e.symbol !== null)»«e.symbol.value.literal»«ELSE».«ENDIF»'''
+	}
+	
+	static def String serialiseNormal(Normal e){
+		'''«IF(e.symbol !== null)»«e.symbol.value.literal»«ELSE» «ENDIF»'''
 	}
 }
