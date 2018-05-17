@@ -51,7 +51,7 @@ public class Controller {
 	 *            Specifies the program arguments (or rather parameters).
 	 */
 	public static void main(String[] args) {
-		Logger.getRootLogger().setLevel(Level.DEBUG);
+		Logger.getRootLogger().setLevel(Level.INFO);
 
 		/* Create an instance of this class and create an empty board */
 		Controller controller = new Controller();
@@ -130,11 +130,11 @@ public class Controller {
 				sync.getSourceResource().getContents().add(b);
 				preprocess(sync.getResourceSet());
 
-				logger.debug("Starting sync");
+				logger.info("Starting sync");
 				long tic = System.currentTimeMillis();
 				sync.forward();
 				long toc = System.currentTimeMillis();
-				logger.debug("Finished in " + (toc - tic) / 1000.0 + "s");
+				logger.info("Finished in " + (toc - tic) / 1000.0 + "s");
 
 				Board sokBoard = (Board) sync.getTargetResource().getContents().get(0);
 				postprocess(sokBoard);
