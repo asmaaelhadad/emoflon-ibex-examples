@@ -181,10 +181,10 @@ public class Controller {
 			sync.getTargetResource().getContents().add(board);
 			
 			long tic = System.currentTimeMillis();
-			logger.debug("Starting sync");
+			logger.info("Starting sync");
 			sync.backward();
 			long toc = System.currentTimeMillis();
-			logger.debug("Finished: " + (toc - tic) / 1000.0 + "s");
+			logger.info("Finished: " + (toc - tic) / 1000.0 + "s");
 
 			switchBoard(board);
 		} catch (IOException e) {
