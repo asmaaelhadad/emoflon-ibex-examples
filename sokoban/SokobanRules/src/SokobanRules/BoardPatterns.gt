@@ -25,4 +25,10 @@ pattern anOccupiedField {
 pattern boulderOnEndField()
 refines oneEndField, anOccupiedField {
 	fig: Boulder
+} when notABlock
+
+condition notABlock = forbid block
+
+pattern block {
+	fig:Block
 }
