@@ -165,7 +165,10 @@ public class Controller {
 		throw new NotImplementedException("You haven't implemented this yet!");
 	}
 
-	private void initialiseBwdSynchroniser() {
+	private void initialiseBwdSynchroniser() throws IOException {
+		if (sync != null)
+			sync.terminate();
+		
 		// TODO: Create a backward synchroniser
 		sync = null;
 		throw new NotImplementedException("You haven't implemented this yet!");
@@ -175,6 +178,8 @@ public class Controller {
 		try {
 			initialiseBwdSynchroniser();
 
+			sync.getTargetResource().getContents().add(board);
+			
 			long tic = System.currentTimeMillis();
 			logger.debug("Starting sync");
 			sync.backward();
