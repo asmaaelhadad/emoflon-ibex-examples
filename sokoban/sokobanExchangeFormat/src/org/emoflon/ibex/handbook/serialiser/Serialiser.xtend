@@ -26,7 +26,7 @@ class Serialiser {
 	}
 	
 	static def String handleEntry(Entry e){
-		'''«IF (e instanceof End)»«serialiseEnd(e)»«ELSEIF (e instanceof Normal)»«serialiseNormal(e)»«ENDIF»'''
+		'''«IF (e instanceof End)»«serialiseEnd(e as End)»«ELSEIF (e instanceof Normal)»«serialiseNormal(e as Normal)»«ENDIF»'''
 	}
 	
 	static def String serialiseEnd(End e){
