@@ -2,7 +2,6 @@
 <psf version="2.0">
 <provider id="org.eclipse.egit.core.GitProvider">
 <project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,sokoban-for-handbook-tgg,sokoban/sokobanExchangeFormat"/>
-<project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,sokoban-for-handbook-tgg,sokoban/SokobanExchangeFormatPreprocessor"/>
 <project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,sokoban-for-handbook-tgg,sokoban/SokobanGUI"/>
 <project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,sokoban-for-handbook-tgg,sokoban/SokobanLanguage"/>
 <project reference="1.0,https://github.com/eMoflon/emoflon-ibex-examples.git,sokoban-for-handbook-tgg,sokoban/SokobanRules"/>
