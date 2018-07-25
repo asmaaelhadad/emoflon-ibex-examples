@@ -12,6 +12,7 @@ public class Preprocessor extends PreprocessingDemoclesApp {
 		File root = new File(Preprocessor.class.getResource(".").getFile());
 		workspacePath = root.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile()
 				.getParentFile().getParent() + File.separatorChar;
+		workspacePath = workspacePath.replace("%20", " ");
 		this.resourceSet = resourceSet;
 	}
 
