@@ -11,18 +11,15 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.emoflon.ibex.handbook.api.RunParser;
 import org.emoflon.ibex.handbook.api.RunSerialiser;
-import org.emoflon.ibex.handbook.preprocessing.Preprocessor;
+import org.emoflon.ibex.handbook.sokobanExchangeFormat.Board;
 import org.emoflon.ibex.tgg.operational.strategies.sync.SYNC;
 import org.moflon.core.utilities.eMoflonEMFUtil;
 import org.moflon.tutorial.sokobangamegui.rules.Result;
 import org.moflon.tutorial.sokobangamegui.rules.SokobanRules;
 import org.moflon.tutorial.sokobangamegui.view.View;
 
-import SokobanExchangeFormatPreprocessor.ExtendedBoard;
-import SokobanLanguage.Board;
 import SokobanLanguage.Field;
 import SokobanLanguage.Figure;
 import SokobanLanguage.SokobanLanguagePackage;
@@ -39,7 +36,7 @@ public class Controller {
 
 	/* The controller class knows all objects, the view and the board */
 	private View view;
-	private Board board;
+	private SokobanLanguage.Board board;
 	private SokobanRules sokobanRules;
 
 	private SYNC sync;
@@ -64,7 +61,7 @@ public class Controller {
 	 * @param board
 	 *            Specifies the new board object.
 	 */
-	public void switchBoard(Board board) {
+	public void switchBoard(SokobanLanguage.Board board) {
 		if (board != null) {
 			/* Dispose new view before allocating a new one */
 			if (view != null) {
@@ -109,7 +106,7 @@ public class Controller {
 	 */
 	public void loadModel(String filePath) {
 		/* Load the specified model and switch to the new board */
-		Board newBoard = (Board) eMoflonEMFUtil.loadModel(filePath);
+		SokobanLanguage.Board newBoard = (SokobanLanguage.Board) eMoflonEMFUtil.loadModel(filePath);
 		switchBoard(newBoard);
 	}
 
@@ -128,7 +125,6 @@ public class Controller {
 				initialiseFwdSynchroniser();
 
 				sync.getSourceResource().getContents().add(b);
-				preprocess(sync.getResourceSet());
 
 				logger.info("Starting sync");
 				long tic = System.currentTimeMillis();
@@ -136,7 +132,7 @@ public class Controller {
 				long toc = System.currentTimeMillis();
 				logger.info("Finished in " + (toc - tic) / 1000.0 + "s");
 
-				Board sokBoard = (Board) sync.getTargetResource().getContents().get(0);
+				SokobanLanguage.Board sokBoard = (SokobanLanguage.Board) sync.getTargetResource().getContents().get(0);
 				postprocess(sokBoard);
 				
 				switchBoard(sokBoard);
@@ -146,12 +142,7 @@ public class Controller {
 		});
 	}
 
-	private void preprocess(ResourceSet rs) {
-		Preprocessor p = new Preprocessor(rs);
-		p.preprocess();
-	}
-
-	private void postprocess(Board b) {
+	private void postprocess(SokobanLanguage.Board b) {
 		b.getFields().stream().max((f1, f2) -> f1.getRow() - f2.getRow()).ifPresent(f -> b.setHeight(f.getRow() + 1));
 		b.getFields().stream().max((f1, f2) -> f1.getCol() - f2.getCol()).ifPresent(f -> b.setWidth(f.getCol() + 1));
 	}
@@ -192,8 +183,8 @@ public class Controller {
 		}
 
 		RunSerialiser serialiser = new RunSerialiser();
-		ExtendedBoard extBoard = (ExtendedBoard) sync.getSourceResource().getContents().get(0);
-		serialiser.unparse(filePath, extBoard.getBoard());
+		Board board = (Board) sync.getSourceResource().getContents().get(0);
+		serialiser.unparse(filePath, board);
 	}
 
 	/**
@@ -270,7 +261,7 @@ public class Controller {
 	 * @param board
 	 *            Specifies the board object which is to be printed.
 	 */
-	public void printBoard(Board board) {
+	public void printBoard(SokobanLanguage.Board board) {
 		/* Check parameter validity */
 		if (board == null) {
 			return;
@@ -314,7 +305,7 @@ public class Controller {
 		}
 	}
 
-	public Board getBoard() {
+	public SokobanLanguage.Board getBoard() {
 		return board;
 	}
 

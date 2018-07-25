@@ -13,7 +13,6 @@ Require-Bundle: org.apache.log4j,
  SokobanLanguage;bundle-version="0.0.1",
  SokobanRules;bundle-version="1.0.0",
  org.emoflon.ibex.gt.democles;bundle-version="1.0.0",
- SokobanExchangeFormatPreprocessor,
  org.emoflon.ibex.tgg.core.runtime;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: SokobanGUI
